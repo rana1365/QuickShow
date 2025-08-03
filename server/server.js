@@ -5,6 +5,7 @@ import express from "express";
 import { serve } from "inngest/express";
 import connectDB from "./configs/db.js";
 import { functions, inngest } from "./inngest/index.js";
+import showRouter from "./routes/showRoutes.js";
 dotenv.config();
 
 const app = express();
@@ -21,6 +22,7 @@ app.use(clerkMiddleware());
 //API Routes
 app.get("/", (req, res) => res.send("Server is Live!"));
 app.use("/api/inngest", serve({ client: inngest, functions }));
+app.use("/api/show", showRouter);
 
 app.listen(port, () =>
   console.log(`Server listening at http://localhost:${port}`)
