@@ -101,7 +101,6 @@ export const getShows = async (req, res) => {
 };
 
 // API To get a single Show(details) from the Database
-
 export const getShow = async (req, res) => {
   try {
     const { movieId } = req.params;
