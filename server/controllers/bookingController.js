@@ -10,7 +10,7 @@ const checkSeatsAvailability = async (showId, selectedSeats) => {
     const isAnySeatTaken = selectedSeats.some((seat) => occupiedSeats[seat]);
     return !isAnySeatTaken;
   } catch (error) {
-    console.log(error.message);
+    console.error(error.message);
     return false;
   }
 };
@@ -51,7 +51,19 @@ export const createBooking = async (req, res) => {
       message: "Booking has been created successfully.",
     });
   } catch (error) {
-    console.log(error.message);
+    console.error(error.message);
+    res.json({ success: false, message: error.message });
+  }
+};
+
+export const getOccupiedSeats = async (req, res) => {
+  try {
+    const { showId } = req.params;
+    const showData = await Show.findById(showId);
+    const occupiedSeats = Object.keys(showData.occupiedSeats);
+    res.json({ success: true, occupiedSeats });
+  } catch (error) {
+    console.error(error.message);
     res.json({ success: false, message: error.message });
   }
 };
